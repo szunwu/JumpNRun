@@ -14,7 +14,7 @@ public class GameMain extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
-
+	//Hallo
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
