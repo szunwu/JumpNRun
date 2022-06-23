@@ -8,13 +8,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class GameMain extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-//Hello
+	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
 	//Hallo
+	//Moin
+
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
