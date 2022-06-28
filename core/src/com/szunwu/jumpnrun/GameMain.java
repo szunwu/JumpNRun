@@ -1,33 +1,36 @@
 package com.szunwu.jumpnrun;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.szunwu.jumpnrun.screens.PlayScreen;
 
-public class GameMain extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+/**
+ * Main game loop
+ * Can have multiple Screens f.e Playscreen
+ */
+public class GameMain extends Game {
+	public SpriteBatch batch;
+	//draws Textures on the screen
+
+	public static final int V_WIDTH = 1280;
+	public static final int V_HEIGHT = 720;
+	//max width and height of game window
+
+	//called on start of game
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		setScreen(new PlayScreen(this));
 	}
-	//Hallo
-	//Moin
 
+	//rendering
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
-	
+
+	// runs when app is destroyed
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
 	}
 }
