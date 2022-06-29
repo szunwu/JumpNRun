@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.szunwu.jumpnrun.GameMain;
+import com.szunwu.jumpnrun.entities.CustomLabel;
+import com.szunwu.jumpnrun.utils.FontGenerator;
 
 /**
  * shows the hud on a Screen
@@ -24,18 +26,21 @@ public class Hud {
     private int worldTimer;
     private  float timeCount;
     private  int score;
-    private int lifeRemaining;
+    public int lifeRemaining;
 
     //labels for display
-    private Label scoreLabel;
-    private Label lifeRemainingLabel;
-    private Label timeLabel;
-    private Label levelLabel;
-    private Label worldLabel;
+    public CustomLabel scoreLabel;
+    public CustomLabel lifeRemainingLabel;
+    private CustomLabel timeLabel;
+    private CustomLabel levelLabel;
+    private CustomLabel worldLabel;
 
-    private Label lifeLabel;
+    private CustomLabel lifeLabel;
 
+    private BitmapFont font;
     public Hud(SpriteBatch batch){
+        //font = new BitmapFont(Gdx.files.internal("data/fontHud.tff"));
+
         worldTimer = 300;
         timeCount = 0;
         score = 0;
@@ -50,13 +55,16 @@ public class Hud {
         table.top(); //default table is placed in centre we need it on the top
         table.setFillParent(true); //table is size of the stage
 
+        //generating font from FontGenerator
+        font = FontGenerator.getBitmapFromTrueFont(30, 1, 3, 3, Color.WHITE, "fontHud.ttf");
+
         //creating Labels
-        scoreLabel = new Label(Integer.toString(score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        lifeRemainingLabel = new Label(Integer.toString(lifeRemaining), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        lifeLabel = new Label("LIFE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new CustomLabel(Integer.toString(score), new Label.LabelStyle(font, Color.WHITE));
+        lifeRemainingLabel = new CustomLabel(Integer.toString(lifeRemaining), new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new CustomLabel("SCORE", new Label.LabelStyle(font, Color.WHITE));
+        levelLabel = new CustomLabel("1-1", new Label.LabelStyle(font, Color.WHITE));
+        worldLabel = new CustomLabel("WORLD", new Label.LabelStyle(font, Color.WHITE));
+        lifeLabel = new CustomLabel("LIFE", new Label.LabelStyle(font, Color.WHITE));
 
         //adding Labels to 1st row
         table.add(lifeLabel).expandX().padTop(10);
