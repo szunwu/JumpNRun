@@ -16,6 +16,10 @@ public class GameMain extends Game {
 	public static final int V_HEIGHT = 1080;
 	//max width and height of game window
 
+	public static final int MAP_WIDTH = 800;
+	public static final int MAP_HEIGHT = 120;
+	//size of map
+
 	//called on start of game
 	@Override
 	public void create () {
