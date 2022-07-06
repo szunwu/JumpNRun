@@ -4,22 +4,21 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.CustomLabel;
 import com.szunwu.jumpnrun.utils.FontGenerator;
-import sun.java2d.opengl.OGLRenderQueue;
 
 /**
  * shows the hud on a Screen
  */
 
-public class Hud {
+public class Hud implements Disposable {
     public Stage stage; //handles the viewport and distributes input
     //for hud: new separate camera and viewport -> game can move while hud always stays in one place
     private Viewport viewport;
@@ -46,7 +45,7 @@ public class Hud {
         score = 0;
         lifeRemaining = 3;
 
-        viewport = new FitViewport(GameMain.V_WIDTH / GameMain.PPM, GameMain.V_HEIGHT / GameMain.PPM, new OrthographicCamera()); //creating new Viewport
+        viewport = new FitViewport(GameMain.V_WIDTH, GameMain.V_HEIGHT, new OrthographicCamera()); //creating new Viewport
         stage = new Stage(viewport, batch); //stage == "empty box"
                                             //if we put something in it everything would "fall off"
                                             //to put things in stage -> table
@@ -66,9 +65,10 @@ public class Hud {
         worldLabel = new CustomLabel("WORLD", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new CustomLabel("LIFE", new Label.LabelStyle(font, Color.WHITE));
 
+
         float ptToPx = 1.3189124498483775f*30+0.2510259653764754f;
-        float scale = ptToPx / GameMain.V_HEIGHT / GameMain.PPM;
-        scale -= 0.15f;
+        float scale = ptToPx / GameMain.V_HEIGHT;
+        //scale -= 0.15f;
 
         scoreLabel.setFontScale(scale);
         lifeRemainingLabel.setFontScale(scale);
@@ -80,9 +80,9 @@ public class Hud {
         System.out.println(scale);
 
         //adding Labels to 1st row
-        table.add(lifeLabel).expandX().padTop(2 / GameMain.PPM);
-        table.add(worldLabel).expandX().padTop(2 / GameMain.PPM);
-        table.add(timeLabel).expandX().padTop(2 / GameMain.PPM);
+        table.add(lifeLabel).expandX().padTop(1);
+        table.add(worldLabel).expandX().padTop(1);
+        table.add(timeLabel).expandX().padTop(1);
 
         table.row(); // creating new row
 
@@ -92,5 +92,10 @@ public class Hud {
         table.add(scoreLabel).expandX();
 
         stage.addActor(table); //adding table to stage
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }
