@@ -1,5 +1,5 @@
 # JumpNRun
-JumpN Run projekt Informatik
+JumpN Run Projekt Informatik
 
 
 Rollen: Product Owner: Francis Grüner
