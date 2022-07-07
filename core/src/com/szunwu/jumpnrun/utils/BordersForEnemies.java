@@ -7,7 +7,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.szunwu.jumpnrun.GameMain;
 
+import java.util.ArrayList;
+
 public class BordersForEnemies {
+
+    private static ArrayList<Rectangle> rectangles;
 
     public BordersForEnemies(World world, TiledMap map){
         //defines bodies and fixtures for tiles from map
@@ -15,6 +19,8 @@ public class BordersForEnemies {
         PolygonShape shape = new PolygonShape();
         FixtureDef fDef = new FixtureDef();
         Body body;
+
+        rectangles = new ArrayList<>();
 
         //creating ground bodies/fixtures for tiles from map
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
@@ -30,7 +36,12 @@ public class BordersForEnemies {
             shape.setAsBox(rectangle.getWidth()/2 / GameMain.PPM, rectangle.getHeight()/2 / GameMain.PPM);
             fDef.shape = shape;
             body.createFixture(fDef);
+            rectangles.add(((RectangleMapObject) object).getRectangle());
+
         }
     }
 
+    public static ArrayList<Rectangle> getRectangles() {
+        return rectangles;
+    }
 }

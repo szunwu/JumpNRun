@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -69,10 +71,11 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer(); //renderer for Box2d in debug mode
 
         player = new Player(world);
-        enemy = new Enemy(world);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
+        enemy = new Enemy(world);
+
     }
 
     @Override
@@ -91,6 +94,7 @@ public class PlayScreen implements Screen {
         renderer.render(); //render map
 
         b2dr.render(world, gamecam.combined);
+        enemy.handleInput(delta, gamecam);
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //defines what will be shown by the camera
         hud.stage.draw();
@@ -143,5 +147,6 @@ public class PlayScreen implements Screen {
     private void handleInput(float dt){
         //when a key is pressed do this
         player.handleInput(dt, this.gamecam);
+        //enemy.handleInput(dt, this.gamecam);
     }
 }

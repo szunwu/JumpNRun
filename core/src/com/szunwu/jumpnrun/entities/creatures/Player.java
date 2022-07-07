@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.Entity;
 
+import java.util.SortedMap;
+
 // TODO comment this class
 public class Player extends Entity {
 
@@ -35,6 +37,7 @@ public class Player extends Entity {
 
     @Override
     public void handleInput(float dt, OrthographicCamera gamecam) {
+        System.out.println((int)(body.getPosition().x * GameMain.PPM));
         //move right
         if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= DEFAULT_SPEED)
             body.applyLinearImpulse(new Vector2(0.1f, 0), body.getWorldCenter(), true);
