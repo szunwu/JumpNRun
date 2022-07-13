@@ -1,5 +1,6 @@
 package com.szunwu.jumpnrun;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.szunwu.jumpnrun.GameMain;

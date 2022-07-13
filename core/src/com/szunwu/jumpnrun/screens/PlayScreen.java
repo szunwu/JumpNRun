@@ -63,7 +63,7 @@ public class PlayScreen implements Screen {
 
         //map loading
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("newTestMap.tmx");
+        map = mapLoader.load("ownMap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / GameMain.PPM);  //map rendering and set map scale
         gamecam.position.set(gameport.getScreenWidth() / 2f, gameport.getWorldHeight() / 2f, 0);
 
