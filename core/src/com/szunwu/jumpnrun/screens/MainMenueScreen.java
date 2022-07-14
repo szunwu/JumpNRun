@@ -49,7 +49,7 @@ public class MainMenueScreen implements Screen {
 
 
         //set skin for buttons
-        Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("glassy/skin/glassy-ui.json"));
 
         //create buttons
         TextButton play = new TextButton("Play", skin);

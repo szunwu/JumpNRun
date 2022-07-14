@@ -19,14 +19,19 @@ public class Enemy extends Entity {
     public Vector2 velocoty;
     private int positive = 1;
     private ArrayList<Rectangle> rectangles;
+    int spawn_x, spawn_y;
 
-    public Enemy(World world) {super(world);}
+    public Enemy(World world, int spawn_x, int spawn_y) {
+        super(world, spawn_x, spawn_y, null);
+        this.spawn_x = spawn_x;
+        this.spawn_y = spawn_y;
+    }
 
     @Override
-    public void defineEntity() {
+    public void defineEntity(int spawn_x, int spawn_y) {
         //new Body for player, set position and type of it, then add it to world
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(150 / GameMain.PPM, 50 / GameMain.PPM);
+        bodyDef.position.set(spawn_x / GameMain.PPM, spawn_y / GameMain.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
 

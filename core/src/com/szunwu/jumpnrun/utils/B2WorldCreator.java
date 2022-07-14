@@ -20,6 +20,8 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             //creating Rectangles for every object group from map
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+            rectangle.setPosition(rectangle.x * GameMain.SCALE, rectangle.y * GameMain.SCALE);
+            rectangle.setSize(rectangle.getWidth() * GameMain.SCALE, rectangle.getHeight() * GameMain.SCALE);
 
             //not movable body
             bodyDef.type = BodyDef.BodyType.StaticBody;

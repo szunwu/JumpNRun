@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,6 +20,7 @@ import com.szunwu.jumpnrun.entities.creatures.Player;
 import com.szunwu.jumpnrun.scenes.Hud;
 import com.szunwu.jumpnrun.utils.B2WorldCreator;
 import com.szunwu.jumpnrun.utils.BordersForEnemies;
+import com.szunwu.jumpnrun.utils.SpawnerCreator;
 
 /**
  * PlayScreen class is responsible for loading Tiled Maps and displaying them
@@ -63,18 +65,23 @@ public class PlayScreen implements Screen {
 
         //map loading
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("ownMap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / GameMain.PPM);  //map rendering and set map scale
+        map = mapLoader.load("untitled.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, GameMain.SCALE / GameMain.PPM);  //map rendering and set map scale
         gamecam.position.set(gameport.getScreenWidth() / 2f, gameport.getWorldHeight() / 2f, 0);
 
         world = new World(new Vector2(0, -9.81f), true);  //new 2d World, 1nd parm=gravity
         b2dr = new Box2DDebugRenderer(); //renderer for Box2d in debug mode
 
-        player = new Player(world);
+        player = new Player(world, 100, 100);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
-        enemy = new Enemy(world);
+        for(Rectangle r : SpawnerCreator.createSpawners(map)){
+            enemy = new Enemy(world, (int) r.getX(), (int) r.getY());
+        }
+
+        //world.setContactListener(new WorldContactListner());
+
 
     }
 
@@ -96,6 +103,11 @@ public class PlayScreen implements Screen {
         b2dr.render(world, gamecam.combined);
         enemy.handleInput(delta, gamecam);
 
+        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //defines what will be shown by the camera
         hud.stage.draw();
 
@@ -106,6 +118,11 @@ public class PlayScreen implements Screen {
         handleInput(dt);
 
         world.step(1/60f, 6, 2);    //def of how the physics sim is running
+
+        player.update(dt);
+
+        hud.update(dt);
+
         gamecam.position.x = player.body.getPosition().x;   //center camera on player
 
         gamecam.update();       //update cam for movement

@@ -33,14 +33,14 @@ public class Hud implements Disposable {
     public CustomLabel scoreLabel;
     public CustomLabel lifeRemainingLabel;
     private CustomLabel timeLabel;
-    private CustomLabel levelLabel;
+    private CustomLabel countTimeLabel;
     private CustomLabel worldLabel;
 
     private CustomLabel lifeLabel;
 
     private BitmapFont font;
     public Hud(SpriteBatch batch){
-        worldTimer = 300;
+        worldTimer = 0;
         timeCount = 0;
         score = 0;
         lifeRemaining = 3;
@@ -61,8 +61,8 @@ public class Hud implements Disposable {
         scoreLabel = new CustomLabel(Integer.toString(score), new Label.LabelStyle(font, Color.WHITE));
         lifeRemainingLabel = new CustomLabel(Integer.toString(lifeRemaining), new Label.LabelStyle(font, Color.WHITE));
         timeLabel = new CustomLabel("SCORE", new Label.LabelStyle(font, Color.WHITE));
-        levelLabel = new CustomLabel("1-1", new Label.LabelStyle(font, Color.WHITE));
-        worldLabel = new CustomLabel("WORLD", new Label.LabelStyle(font, Color.WHITE));
+        countTimeLabel = new CustomLabel(Integer.toString(worldTimer), new Label.LabelStyle(font, Color.WHITE));
+        worldLabel = new CustomLabel("TIME", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new CustomLabel("LIFE", new Label.LabelStyle(font, Color.WHITE));
 
 
@@ -73,7 +73,7 @@ public class Hud implements Disposable {
         scoreLabel.setFontScale(scale);
         lifeRemainingLabel.setFontScale(scale);
         timeLabel.setFontScale(scale);
-        levelLabel.setFontScale(scale);
+        countTimeLabel.setFontScale(scale);
         worldLabel.setFontScale(scale);
         lifeLabel.setFontScale(scale);
 
@@ -88,10 +88,19 @@ public class Hud implements Disposable {
 
         //2nd row
         table.add(lifeRemainingLabel).expandX();
-        table.add(levelLabel).expandX();
+        table.add(countTimeLabel).expandX();
         table.add(scoreLabel).expandX();
 
         stage.addActor(table); //adding table to stage
+    }
+
+    public void update(float dt){
+        timeCount += dt;
+        if(timeCount >= 1){
+            worldTimer++;
+            countTimeLabel.setText(worldTimer);
+            timeCount = 0;
+        }
     }
 
     @Override

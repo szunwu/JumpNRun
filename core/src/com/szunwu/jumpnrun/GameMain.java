@@ -12,12 +12,13 @@ public class GameMain extends Game {
 	public SpriteBatch batch;
 	//draws Textures on the screen
 
-	public static final int V_WIDTH = 370;
+	public static final int V_WIDTH = 480;
 	public static final int V_HEIGHT = 13*16;
 	//max width and height of game window
 
 	public static final int MAP_WIDTH = 240*16;
-	public static final int MAP_HEIGHT = 13*16;
+	public static final int MAP_HEIGHT = 20*16;
+	public static final float SCALE = 0.25f;
 	//size of map
 
 	public static final float PPM = 100;
