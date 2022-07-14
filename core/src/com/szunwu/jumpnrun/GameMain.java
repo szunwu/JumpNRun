@@ -30,6 +30,8 @@ public class GameMain extends Game {
 	private LoginScreen loginScreen;
 	private RegisterScreen registerScreen;
 
+	private HighscoreScreen highscoreScreen;
+
 	public final static int MainMenue = 0;
 	public final static int Play = 1;
 	public final static int Character = 2;
@@ -37,13 +39,15 @@ public class GameMain extends Game {
 	public final static int Login = 4;
 	public final static int Register = 5;
 
+	public final static int Highscore = 6;
+
 
 	//called on start of game
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
-		//setScreen(new MainMenueScreen(this));
+		//setScreen(new PlayScreen(this));
+		setScreen(new MainMenueScreen(this));
 	}
 
 	//rendering
@@ -85,6 +89,8 @@ public class GameMain extends Game {
 				if (registerScreen == null) registerScreen = new RegisterScreen(this);
 				this.setScreen(registerScreen);
 				break;
+			case  Highscore:
+				if (highscoreScreen == null) highscoreScreen = new HighscoreScreen(this);
 		}
 	}
 }
