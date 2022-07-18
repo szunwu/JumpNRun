@@ -180,6 +180,7 @@ public class PlayScreen implements Screen {
 
         hud.update(dt);
 
+
         gamecam.position.x = player.body.getPosition().x;   //center camera on player
 
         gamecam.update();       //update cam for movement

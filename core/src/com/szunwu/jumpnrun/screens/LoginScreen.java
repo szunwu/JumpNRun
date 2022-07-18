@@ -3,11 +3,14 @@ package com.szunwu.jumpnrun.screens;
 import com.badlogic.gdx.Screen;
 import com.szunwu.jumpnrun.GameMain;
 
+import static com.szunwu.jumpnrun.GameMain.Play;
+
 public class LoginScreen implements Screen{
 
     private GameMain game;
     public LoginScreen(GameMain gameMain){
         game = gameMain;
+        gameMain.changeScreen(Play);
     }
 
     @Override
