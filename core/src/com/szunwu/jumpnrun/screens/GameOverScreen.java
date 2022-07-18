@@ -65,9 +65,11 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
             System.out.println("play again");
+            game.setScreen(new PlayScreen((GameMain) game));
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             System.out.println("esc");
+            Gdx.app.exit();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
