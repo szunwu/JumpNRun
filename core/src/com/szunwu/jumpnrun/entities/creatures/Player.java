@@ -1,6 +1,5 @@
 package com.szunwu.jumpnrun.entities.creatures;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,15 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.sun.org.apache.xerces.internal.impl.dv.xs.AnyURIDV;
 import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.Entity;
 import com.szunwu.jumpnrun.scenes.Hud;
+import com.szunwu.jumpnrun.screens.GameOverScreen;
 
-import javax.lang.model.element.AnnotationMirror;
-import javax.xml.soap.Text;
-import java.util.ArrayList;
-import java.util.SortedMap;
 
 // TODO comment this class
 public class Player extends Entity {
@@ -38,8 +33,9 @@ public class Player extends Entity {
     private Animation<TextureRegion> playerJump;
     private boolean runningRight;
     private float stateTimer;
+    private GameMain game;
 
-    public Player(World world, int spawn_x, int spawn_y, int life, Hud hud) {
+    public Player(World world, int spawn_x, int spawn_y, int life, Hud hud, GameMain game) {
         super(world, spawn_x, spawn_y, new TextureAtlas("playerTextures/player1/player1.txt"));
         atlas = new TextureAtlas("playerTextures/player1/player1.txt");
         playerStand = new TextureRegion(atlas.findRegion("player1_laufen1"), 0, 0, 128, 128);
@@ -49,6 +45,7 @@ public class Player extends Entity {
         this.hud = hud;
         this.currState = State.STANDING;
         this.prevState = State.STANDING;
+        this.game = game;
         stateTimer = 0;
         runningRight = true;
 
@@ -113,7 +110,6 @@ public class Player extends Entity {
             case "fall":
                 if(lifeLeft <= 0){
                     isDead = true;
-                    die();
                 } else{
                     body.applyLinearImpulse(new Vector2(0f, 8), this.body.getWorldCenter(), true);
                     lifeLeft--;
@@ -136,6 +132,7 @@ public class Player extends Entity {
 
     @Override
     public void die() {
+        game.changeScreen(GameMain.Screens.GameOverScreen);
     }
 
     @Override

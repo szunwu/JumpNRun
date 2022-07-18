@@ -36,11 +36,11 @@ public class WorldContactListener implements ContactListener {
             case GameMain.PLAYER_BIT | GameMain.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits == GameMain.PLAYER_BIT) {
                     ((Enemy) fixB.getUserData()).die();
-                    ((Enemy) fixB.getUserData()).addScore(-200);
+                    //((Enemy) fixB.getUserData()).addScore(-200);
                     ((Player) fixA.getUserData()).hit("enemy");
                 } else {
                     ((Enemy) fixA.getUserData()).die();
-                    ((Enemy) fixA.getUserData()).addScore(-200);
+                    //((Enemy) fixA.getUserData()).addScore(-200);
                     ((Player) fixB.getUserData()).hit("enemy");
                 }
                 break;

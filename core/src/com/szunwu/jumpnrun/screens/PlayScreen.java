@@ -1,5 +1,6 @@
 package com.szunwu.jumpnrun.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -81,7 +82,7 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -9.81f), true);  //new 2d World, 1nd parm=gravity
         b2dr = new Box2DDebugRenderer(); //renderer for Box2d in debug mode
 
-        player = new Player(world, 100, 100, 3, hud);
+        player = new Player(world, 100, 100, 3, hud, game);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
@@ -125,21 +126,33 @@ public class PlayScreen implements Screen {
         renderer.render(); //render map
 
         b2dr.render(world, gamecam.combined);
-        enemy.handleInput(delta, gamecam);
+
+        for(Enemy e : enemies) {
+            e.handleInput(delta, gamecam);
+        }
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
-        enemy.draw(game.batch);
+
+        for(Enemy e : enemies){
+            e.draw(game.batch);
+        }
+
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //defines what will be shown by the camera
         hud.stage.draw();
 
         if(gameOver()){
-            game.setScreen(new GameOverScreen(game));
-            dispose();
+            gameOverInit();
         }
+    }
+
+    public void gameOverInit(){
+        //game.setScreen(new GameOverScreen(game));
+        game.changeScreen(GameMain.Screens.GameOverScreen);
+        dispose();
     }
 
     public void update(float dt){
