@@ -56,6 +56,7 @@ public class GameMain extends Game {
 		Login,
 		Register,
 		Highscore,
+		Credits,
 		GameOverScreen
 	}
 
@@ -97,7 +98,7 @@ public class GameMain extends Game {
 				break;
 			case Credits:
 				if (creditsScreen == null) creditsScreen = new CreditsScreen(this);
-				this.setScreen(characterScreen);
+				this.setScreen(creditsScreen);
 				break;
 			case Login:
 				if (loginScreen == null) loginScreen = new LoginScreen(this);
