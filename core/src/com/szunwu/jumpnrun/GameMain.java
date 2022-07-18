@@ -2,7 +2,10 @@ package com.szunwu.jumpnrun;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.szunwu.jumpnrun.screens.*;
 
 /**
@@ -49,6 +52,8 @@ public class GameMain extends Game {
 	public final static int Highscore = 6;
 	public final static int GameOverScreen = 7;
 
+	public final static boolean DEBUG_MODE = true;
+
 	public enum Screens  {
 		MainMenu,
 		Play,
@@ -65,7 +70,6 @@ public class GameMain extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		//setScreen(new PlayScreen(this));
 		setScreen(new MainMenueScreen(this));
 	}
 
@@ -98,7 +102,7 @@ public class GameMain extends Game {
 				break;
 			case Credits:
 				if (creditsScreen == null) creditsScreen = new CreditsScreen(this);
-				this.setScreen(characterScreen);
+				this.setScreen(creditsScreen);
 				break;
 			case Login:
 				if (loginScreen == null) loginScreen = new LoginScreen(this);

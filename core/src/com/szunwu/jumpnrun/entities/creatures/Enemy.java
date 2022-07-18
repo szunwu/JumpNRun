@@ -56,7 +56,7 @@ public class Enemy extends Entity {
         //create new fixture for body and create the shape to be shown on screen
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(4 / GameMain.PPM);
+        shape.setRadius(3.5f / GameMain.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = GameMain.ENEMY_BIT;
         body.createFixture(fdef).setUserData(this);
@@ -67,10 +67,10 @@ public class Enemy extends Entity {
 
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-4, 8).scl(1 / GameMain.PPM);
-        vector2s[1] = new Vector2(4, 8).scl(1 / GameMain.PPM);
-        vector2s[2] = new Vector2(-2, 3).scl(1 / GameMain.PPM);
-        vector2s[3] = new Vector2(2, 3).scl(1 / GameMain.PPM);
+        vector2s[0] = new Vector2(-3, 5).scl(1 / GameMain.PPM);
+        vector2s[1] = new Vector2(3, 5).scl(1 / GameMain.PPM);
+        vector2s[2] = new Vector2(-1, 3).scl(1 / GameMain.PPM);
+        vector2s[3] = new Vector2(1, 3).scl(1 / GameMain.PPM);
         head.set(vector2s);
         fdef.shape = head;
         fdef.restitution = 0.5f;

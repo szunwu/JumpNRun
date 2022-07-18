@@ -38,13 +38,13 @@ public class CreditsScreen implements Screen{
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(GameMain.DEBUG_MODE);
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("glassy/skin/glassy-ui.json"));
 
         Label Headline = new Label("Credits", skin);
-        Label Wojtec = new Label("Wojtec", skin);
+        Label Wojtec = new Label("Wojtek", skin);
         Label Francis = new Label("Francis", skin);
         Label Ramah = new Label("Ramah",skin);
         Label Hannah = new Label("Hannah", skin);

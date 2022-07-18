@@ -37,7 +37,7 @@ public class FinishScreen implements Screen {
         font = FontGenerator.getBitmapFromTrueFont(20, 1, 3, 3, Color.WHITE, "fontHud.ttf");
         Label.LabelStyle fontStyle = new Label.LabelStyle(font, Color.WHITE);
 
-        total = (int)(score - 0.25f * time + 1000 * life);
+        total = (int)(score - (0.2f * time) + (1000 * life) - 300);
 
         Table table = new Table();
         table.center();

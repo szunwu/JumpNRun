@@ -36,7 +36,7 @@ public class LoginScreen implements Screen{
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(GameMain.DEBUG_MODE);
         stage.addActor(table);
 
         //set skin for buttons

@@ -65,7 +65,7 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
             System.out.println("play again");
-            game.setScreen(new PlayScreen((GameMain) game));
+            game.setScreen((Screen) new PlayScreen((GameMain) game));
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             System.out.println("esc");

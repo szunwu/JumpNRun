@@ -44,7 +44,7 @@ public class MainMenueScreen implements Screen {
         //create table that fills the screen -> everything later is added to the table
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(GameMain.DEBUG_MODE);
         stage.addActor(table);
 
 
@@ -98,7 +98,7 @@ public class MainMenueScreen implements Screen {
         credits.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(GameMain.Screens.Credits);
+                game.changeScreen(GameMain.Credits);
             }
         });
 

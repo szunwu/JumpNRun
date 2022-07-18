@@ -62,7 +62,6 @@ public class PlayScreen implements Screen {
     private ArrayList<Enemy> enemies;
     private float dt;
     private boolean paused = false;
-
     public PlayScreen(GameMain game) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -81,7 +80,7 @@ public class PlayScreen implements Screen {
 
         Rectangle rect = FinishSpawner.createSpawners(map);
         System.out.println(rect.getX());
-        player = new Player(world, GameMain.V_WIDTH/2, 100, 1000, hud, game, rect);
+        player = new Player(world, GameMain.V_WIDTH/2, 100, 3, hud, game, rect);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
@@ -93,8 +92,6 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
         gamecam.position.x = GameMain.V_WIDTH/2/GameMain.PPM;
-
-
     }
 
     @Override
@@ -106,26 +103,27 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         if(paused){
-            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 paused = false;
                 System.out.println("unpaused");
                 hud.setPause(false);
             }
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                update(delta);  //update
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+        } else {
+            update(delta);  //update
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);  //renders solid color background
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.setView(gamecam);
         renderer.render(); //render map
 
-        b2dr.render(world, gamecam.combined);
+        if(GameMain.DEBUG_MODE)
+            b2dr.render(world, gamecam.combined);
 
         for(Enemy e : enemies) {
             e.handleInput(delta, gamecam);
@@ -167,7 +165,7 @@ public class PlayScreen implements Screen {
             e.body.setActive(e.getX() < player.getX() + 288 / GameMain.PPM);
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             paused = true;
             hud.setPause(true);
             System.out.println("paused");
@@ -180,7 +178,10 @@ public class PlayScreen implements Screen {
 
         hud.update(dt);
 
-
+        if(player.body.getPosition().x * GameMain.PPM >= player.finish.getX() - 5){
+            game.finish(hud.getWorldTimer(),hud.getLifeRemaining(), hud.getScore());
+            dispose();
+        }
 
         if(player.getX() >= GameMain.V_WIDTH / 2 / GameMain.PPM && player.getX() <= (GameMain.MAP_WIDTH - GameMain.V_WIDTH / 2) / GameMain.PPM){
             gamecam.position.x = player.body.getPosition().x;   //center camera on player

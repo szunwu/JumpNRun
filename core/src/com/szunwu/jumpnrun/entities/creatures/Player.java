@@ -36,7 +36,7 @@ public class Player extends Entity {
     private boolean runningRight;
     private float stateTimer;
     private GameMain game;
-    private Rectangle finish;
+    public Rectangle finish;
 
     public Player(World world, float spawn_x, float spawn_y, int life, Hud hud, GameMain game, Rectangle finish) {
         super(world, spawn_x, spawn_y, new TextureAtlas("playerTextures/player1/player1.txt"));
@@ -154,14 +154,11 @@ public class Player extends Entity {
     }
 
     public void update(float dt){
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.04f);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.025f);
         if(getState() == State.FALLING){
             hit("fall");
         }
         setRegion(getFrame(dt));
-        if(this.body.getPosition().x * GameMain.PPM >= finish.getX() - 5){
-            game.finish(hud.getWorldTimer(),hud.getLifeRemaining(), hud.getScore());
-        }
     }
 
     private TextureRegion getFrame(float dt){

@@ -37,7 +37,7 @@ public class CharacterScreen implements Screen {
         //create table that fills the screen -> everything later is added to the table
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(GameMain.DEBUG_MODE);
         stage.addActor(table);
 
 
