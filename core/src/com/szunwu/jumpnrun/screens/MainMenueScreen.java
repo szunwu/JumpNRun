@@ -81,13 +81,13 @@ public class MainMenueScreen implements Screen {
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(GameMain.Play);
+                game.changeScreen(GameMain.Register);
                 dispose();
             }
         });
 
         //action highscore button
-        play.addListener(new ChangeListener() {
+        highscore.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.changeScreen(GameMain.Highscore);
@@ -95,6 +95,12 @@ public class MainMenueScreen implements Screen {
             }
         });
 
+        credits.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(GameMain.Screens.Credits);
+            }
+        });
 
     }
 
