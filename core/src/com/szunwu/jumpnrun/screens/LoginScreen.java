@@ -2,6 +2,7 @@ package com.szunwu.jumpnrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -62,7 +63,8 @@ public class LoginScreen implements Screen{
         Login.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(GameMain.Screens.Play);
+                game.changeScreen(GameMain.Play);
+                dispose();
             }
         });
 
@@ -70,11 +72,19 @@ public class LoginScreen implements Screen{
 
     @Override
     public void render(float delta) {
+        //clear screen
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //tell stage to do actions and draw itself
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
     }
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+
 
     }
 
@@ -95,6 +105,8 @@ public class LoginScreen implements Screen{
 
     @Override
     public void dispose() {
+        stage.dispose();
+
 
     }
 }

@@ -66,6 +66,7 @@ public class RegisterScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.changeScreen(GameMain.Login);
+                dispose();
             }
         });
 
@@ -73,6 +74,7 @@ public class RegisterScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.changeScreen(GameMain.Character);
+                dispose();
             }
         });
 

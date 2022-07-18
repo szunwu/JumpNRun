@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.CustomLabel;
 import com.szunwu.jumpnrun.utils.FontGenerator;
-import javafx.scene.control.Tab;
+
 
 /**
  * shows the hud on a Screen
