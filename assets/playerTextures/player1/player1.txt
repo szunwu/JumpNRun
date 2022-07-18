@@ -1,0 +1,26 @@
+player1.png
+size: 384, 128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+player1_laufen1
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+player1_laufen2
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+player1_springen
+  rotate: false
+  xy: 256, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

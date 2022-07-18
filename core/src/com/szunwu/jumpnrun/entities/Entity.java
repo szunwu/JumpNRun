@@ -20,7 +20,10 @@ public abstract class Entity extends Sprite {
 
     public enum State { //state to see what is the state of Entity
         JUMPING,
-        FALLING
+        FALLING,
+        DEAD,
+        STANDING,
+        RUNNING,
     }
 
     public Entity(World world, int spawn_x, int spawn_y, TextureAtlas atlas){

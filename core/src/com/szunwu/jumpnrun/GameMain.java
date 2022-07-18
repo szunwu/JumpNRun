@@ -24,6 +24,12 @@ public class GameMain extends Game {
 	public static final float PPM = 100;
 	//Pixels per Meter
 
+	public static final short DEFAULT_BIT = 1;
+	public static final short PLAYER_BIT = 2;
+	public static final short ENEMY_BIT = 4;
+	public static final short ENEMY_HEAD_BIT = 8;
+
+
 	private MainMenueScreen mainMenueScreen;
 	private PlayScreen playScreen;
 	private CharacterScreen characterScreen;

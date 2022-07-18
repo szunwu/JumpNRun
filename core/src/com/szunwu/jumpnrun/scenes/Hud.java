@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.CustomLabel;
 import com.szunwu.jumpnrun.utils.FontGenerator;
+import javafx.scene.control.Tab;
 
 /**
  * shows the hud on a Screen
@@ -39,6 +40,9 @@ public class Hud implements Disposable {
     private CustomLabel lifeLabel;
 
     private BitmapFont font;
+    private boolean pause = false;
+    private Table tablePause;
+
     public Hud(SpriteBatch batch){
         worldTimer = 0;
         timeCount = 0;
@@ -64,6 +68,10 @@ public class Hud implements Disposable {
         countTimeLabel = new CustomLabel(Integer.toString(worldTimer), new Label.LabelStyle(font, Color.WHITE));
         worldLabel = new CustomLabel("TIME", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new CustomLabel("LIFE", new Label.LabelStyle(font, Color.WHITE));
+
+        Label.LabelStyle fontStyle = new Label.LabelStyle(font, Color.WHITE);
+        Label pauseText = new Label("PAUSE", fontStyle);
+        Label pauseInfo = new Label("To resume click ESC", fontStyle);
 
 
         float ptToPx = 1.3189124498483775f*30+0.2510259653764754f;
@@ -91,20 +99,48 @@ public class Hud implements Disposable {
         table.add(countTimeLabel).expandX();
         table.add(scoreLabel).expandX();
 
+        tablePause = new Table();
+        tablePause.setFillParent(true);
+        tablePause.row();
+        tablePause.add(pauseText).expandX();
+        tablePause.row();
+        pauseInfo.setFontScale(scale + 0.2f);
+        tablePause.add(pauseInfo).expandX();
+
         stage.addActor(table); //adding table to stage
     }
 
     public void update(float dt){
-        timeCount += dt;
-        if(timeCount >= 1){
-            worldTimer++;
-            countTimeLabel.setText(worldTimer);
-            timeCount = 0;
+        if(pause){
+            stage.addActor(tablePause);
+        } else {
+            tablePause.remove();
+            timeCount += dt;
+            if (timeCount >= 1) {
+                worldTimer++;
+                countTimeLabel.setText(worldTimer);
+                timeCount = 0;
+            }
         }
+    }
+
+    public void addScore(int value){
+        score += value;
+        scoreLabel.setText(Integer.toString(score));
+    }
+
+    public void updateLife(int nLife){
+        lifeRemaining = nLife;
+        lifeRemainingLabel.setText(Integer.toString(lifeRemaining));
     }
 
     @Override
     public void dispose() {
         stage.dispose();
     }
+
+    public void setPause(boolean pause){
+        this.pause = pause;
+    }
+
 }

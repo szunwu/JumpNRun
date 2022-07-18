@@ -1,6 +1,7 @@
 package com.szunwu.jumpnrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,12 +16,16 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.szunwu.jumpnrun.GameMain;
+import com.szunwu.jumpnrun.entities.Entity;
 import com.szunwu.jumpnrun.entities.creatures.Enemy;
 import com.szunwu.jumpnrun.entities.creatures.Player;
 import com.szunwu.jumpnrun.scenes.Hud;
 import com.szunwu.jumpnrun.utils.B2WorldCreator;
 import com.szunwu.jumpnrun.utils.BordersForEnemies;
 import com.szunwu.jumpnrun.utils.SpawnerCreator;
+import com.szunwu.jumpnrun.utils.WorldContactListener;
+
+import java.util.ArrayList;
 
 /**
  * PlayScreen class is responsible for loading Tiled Maps and displaying them
@@ -56,6 +61,10 @@ public class PlayScreen implements Screen {
     //enemies
     private Enemy enemy;
 
+    private ArrayList<Enemy> enemies;
+    private float dt;
+    private boolean paused = false;
+
     public PlayScreen(GameMain game) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -72,15 +81,17 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -9.81f), true);  //new 2d World, 1nd parm=gravity
         b2dr = new Box2DDebugRenderer(); //renderer for Box2d in debug mode
 
-        player = new Player(world, 100, 100);
+        player = new Player(world, 100, 100, 3, hud);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
+        enemies = new ArrayList<>();
         for(Rectangle r : SpawnerCreator.createSpawners(map)){
-            enemy = new Enemy(world, (int) r.getX(), (int) r.getY());
+            enemy = new Enemy(world, (int) r.getX(), (int) r.getY(), this.hud);
+            enemies.add(enemy);
         }
 
-        //world.setContactListener(new WorldContactListner());
+        world.setContactListener(new WorldContactListener());
 
 
     }
@@ -93,7 +104,20 @@ public class PlayScreen implements Screen {
     //runs all the time and renders (a loop)
     @Override
     public void render(float delta) {
-        update(delta);  //update
+        if(paused){
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                paused = false;
+                System.out.println("unpaused");
+                hud.setPause(false);
+            }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                update(delta);  //update
+            }
         Gdx.gl.glClearColor(0, 0, 0, 1);  //renders solid color background
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -106,20 +130,40 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        enemy.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined); //defines what will be shown by the camera
         hud.stage.draw();
 
-
+        if(gameOver()){
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
     }
 
     public void update(float dt){
+        this.dt = dt;
         handleInput(dt);
 
         world.step(1/60f, 6, 2);    //def of how the physics sim is running
 
         player.update(dt);
+        for(Enemy e : enemies){
+            e.update(dt);
+            e.body.setActive(e.getX() < player.getX() + 288 / GameMain.PPM);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            paused = true;
+            hud.setPause(true);
+            System.out.println("paused");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         hud.update(dt);
 
@@ -149,7 +193,6 @@ public class PlayScreen implements Screen {
 
     }
 
-
     @Override
     public void dispose() {
         //delete unused
@@ -165,5 +208,12 @@ public class PlayScreen implements Screen {
         //when a key is pressed do this
         player.handleInput(dt, this.gamecam);
         //enemy.handleInput(dt, this.gamecam);
+    }
+
+    public boolean gameOver(){
+        if(player.currState == Entity.State.DEAD && player.getStateTimer() > 3){
+            return true;
+        }
+        return false;
     }
 }
