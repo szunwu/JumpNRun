@@ -1,9 +1,9 @@
 package com.szunwu.jumpnrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.szunwu.jumpnrun.screens.*;
+import com.szunwu.jumpnrun.screens.FinishScreen;
 
 /**
  * Main game loop
@@ -17,8 +17,8 @@ public class GameMain extends Game {
 	public static final int V_HEIGHT = 13*16;
 	//max width and height of game window
 
-	public static final int MAP_WIDTH = 240*16;
-	public static final int MAP_HEIGHT = 20*16;
+	public static final int MAP_WIDTH = 500*16;
+	public static final int MAP_HEIGHT = 13*16;
 	public static final float SCALE = 0.25f;
 	//size of map
 
@@ -56,7 +56,8 @@ public class GameMain extends Game {
 		Login,
 		Register,
 		Highscore,
-		GameOverScreen
+		GameOverScreen,
+		FinishScreen
 	}
 
 
@@ -123,6 +124,10 @@ public class GameMain extends Game {
 				if (gameOverScreen == null) setScreen(new GameOverScreen(this));
 				break;
 		}
+	}
+
+	public void finish(int time, int life, int score){
+		setScreen(new FinishScreen(this, score, time, life));
 	}
 
 }

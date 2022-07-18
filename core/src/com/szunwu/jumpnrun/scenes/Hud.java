@@ -143,4 +143,15 @@ public class Hud implements Disposable {
         this.pause = pause;
     }
 
+    public int getWorldTimer() {
+        return worldTimer;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLifeRemaining() {
+        return lifeRemaining;
+    }
 }

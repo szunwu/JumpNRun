@@ -21,10 +21,7 @@ import com.szunwu.jumpnrun.entities.Entity;
 import com.szunwu.jumpnrun.entities.creatures.Enemy;
 import com.szunwu.jumpnrun.entities.creatures.Player;
 import com.szunwu.jumpnrun.scenes.Hud;
-import com.szunwu.jumpnrun.utils.B2WorldCreator;
-import com.szunwu.jumpnrun.utils.BordersForEnemies;
-import com.szunwu.jumpnrun.utils.SpawnerCreator;
-import com.szunwu.jumpnrun.utils.WorldContactListener;
+import com.szunwu.jumpnrun.utils.*;
 
 import java.util.ArrayList;
 
@@ -82,7 +79,9 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -9.81f), true);  //new 2d World, 1nd parm=gravity
         b2dr = new Box2DDebugRenderer(); //renderer for Box2d in debug mode
 
-        player = new Player(world, 100, 100, 3, hud, game);
+        Rectangle rect = FinishSpawner.createSpawners(map);
+        System.out.println(rect.getX());
+        player = new Player(world, GameMain.V_WIDTH/2, 100, 1000, hud, game, rect);
 
         new B2WorldCreator(world, map);
         new BordersForEnemies(world, map);
@@ -93,6 +92,7 @@ public class PlayScreen implements Screen {
         }
 
         world.setContactListener(new WorldContactListener());
+        gamecam.position.x = GameMain.V_WIDTH/2/GameMain.PPM;
 
 
     }
@@ -181,7 +181,11 @@ public class PlayScreen implements Screen {
         hud.update(dt);
 
 
-        gamecam.position.x = player.body.getPosition().x;   //center camera on player
+
+        if(player.getX() >= GameMain.V_WIDTH / 2 / GameMain.PPM && player.getX() <= (GameMain.MAP_WIDTH - GameMain.V_WIDTH / 2) / GameMain.PPM){
+            gamecam.position.x = player.body.getPosition().x;   //center camera on player
+        }
+
 
         gamecam.update();       //update cam for movement
         renderer.setView(gamecam);  //draw only what the camera can see

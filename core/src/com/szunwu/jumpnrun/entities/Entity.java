@@ -13,8 +13,8 @@ public abstract class Entity extends Sprite {
     public World world;
     public Body body;
     public final float DEFAULT_SPEED = 1f;
-    public int spawn_x;
-    public int spawn_y;
+    public float spawn_x;
+    public float spawn_y;
 
     public TextureAtlas atlas;
 
@@ -26,7 +26,7 @@ public abstract class Entity extends Sprite {
         RUNNING,
     }
 
-    public Entity(World world, int spawn_x, int spawn_y, TextureAtlas atlas){
+    public Entity(World world, float spawn_x, float spawn_y, TextureAtlas atlas){
         //create new Entity
         this.world = world;
         this.spawn_x = spawn_x;
@@ -35,7 +35,7 @@ public abstract class Entity extends Sprite {
         defineEntity(spawn_x, spawn_y);
     }
 
-    public abstract void defineEntity(int spawn_x, int spawn_y);
+    public abstract void defineEntity(float spawn_x, float spawn_y);
 
     public abstract void handleInput(float dt, OrthographicCamera gamecam);
 

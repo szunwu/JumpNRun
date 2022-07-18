@@ -20,7 +20,7 @@ public class Enemy extends Entity {
     public Vector2 velocoty;
     private int positive = 1;
     private ArrayList<Rectangle> rectangles;
-    int spawn_x, spawn_y;
+    private float spawn_x, spawn_y;
     private TextureAtlas atlas;
     private TextureRegion enemyLeft, enemyRight, enemyDead;
     private boolean setToDestroy;
@@ -29,7 +29,7 @@ public class Enemy extends Entity {
 
     private Hud hud;
 
-    public Enemy(World world, int spawn_x, int spawn_y, Hud hud) {
+    public Enemy(World world, float spawn_x, float spawn_y, Hud hud) {
         super(world, spawn_x, spawn_y, null);
         this.spawn_x = spawn_x;
         this.spawn_y = spawn_y;
@@ -46,7 +46,7 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void defineEntity(int spawn_x, int spawn_y) {
+    public void defineEntity(float spawn_x, float spawn_y) {
         //new Body for player, set position and type of it, then add it to world
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(spawn_x / GameMain.PPM, spawn_y / GameMain.PPM);

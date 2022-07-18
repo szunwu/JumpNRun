@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -13,6 +14,7 @@ import com.szunwu.jumpnrun.GameMain;
 import com.szunwu.jumpnrun.entities.Entity;
 import com.szunwu.jumpnrun.scenes.Hud;
 import com.szunwu.jumpnrun.screens.GameOverScreen;
+import com.szunwu.jumpnrun.utils.FinishSpawner;
 
 
 // TODO comment this class
@@ -34,8 +36,9 @@ public class Player extends Entity {
     private boolean runningRight;
     private float stateTimer;
     private GameMain game;
+    private Rectangle finish;
 
-    public Player(World world, int spawn_x, int spawn_y, int life, Hud hud, GameMain game) {
+    public Player(World world, float spawn_x, float spawn_y, int life, Hud hud, GameMain game, Rectangle finish) {
         super(world, spawn_x, spawn_y, new TextureAtlas("playerTextures/player1/player1.txt"));
         atlas = new TextureAtlas("playerTextures/player1/player1.txt");
         playerStand = new TextureRegion(atlas.findRegion("player1_laufen1"), 0, 0, 128, 128);
@@ -46,6 +49,7 @@ public class Player extends Entity {
         this.currState = State.STANDING;
         this.prevState = State.STANDING;
         this.game = game;
+        this.finish = finish;
         stateTimer = 0;
         runningRight = true;
 
@@ -61,7 +65,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void defineEntity(int spawn_x , int spawn_y) {
+    public void defineEntity(float spawn_x , float spawn_y) {
         //new Body for player, set position and type of it, then add it to world
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(spawn_x / GameMain.PPM, spawn_y / GameMain.PPM);
@@ -155,6 +159,9 @@ public class Player extends Entity {
             hit("fall");
         }
         setRegion(getFrame(dt));
+        if(this.body.getPosition().x * GameMain.PPM >= finish.getX() - 5){
+            game.finish(hud.getWorldTimer(),hud.getLifeRemaining(), hud.getScore());
+        }
     }
 
     private TextureRegion getFrame(float dt){
