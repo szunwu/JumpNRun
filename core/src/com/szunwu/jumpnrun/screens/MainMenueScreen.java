@@ -81,7 +81,7 @@ public class MainMenueScreen implements Screen {
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(GameMain.Play);       //TODO: changed
+                game.changeScreen(GameMain.Login);
                 dispose();
             }
         });

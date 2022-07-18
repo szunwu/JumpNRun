@@ -1,7 +1,6 @@
 package com.szunwu.jumpnrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.szunwu.jumpnrun.screens.*;
 
@@ -25,20 +24,14 @@ public class GameMain extends Game {
 	public static final float PPM = 100;
 	//Pixels per Meter
 
-	public static final short DEFAULT_BIT = 1;
-	public static final short PLAYER_BIT = 2;
-	public static final short ENEMY_BIT = 4;
-	public static final short ENEMY_HEAD_BIT = 8;
-
-
 	private MainMenueScreen mainMenueScreen;
 	private PlayScreen playScreen;
 	private CharacterScreen characterScreen;
 	private CreditsScreen creditsScreen;
 	private LoginScreen loginScreen;
 	private RegisterScreen registerScreen;
+
 	private HighscoreScreen highscoreScreen;
-	private GameOverScreen gameOverScreen;
 
 	public final static int MainMenue = 0;
 	public final static int Play = 1;
@@ -46,18 +39,8 @@ public class GameMain extends Game {
 	public final static int Credits = 3;
 	public final static int Login = 4;
 	public final static int Register = 5;
-	public final static int Highscore = 6;
-	public final static int GameOverScreen = 7;
 
-	public enum Screens  {
-		MainMenu,
-		Play,
-		Character,
-		Login,
-		Register,
-		Highscore,
-		GameOverScreen
-	}
+	public final static int Highscore = 6;
 
 
 	//called on start of game
@@ -109,20 +92,6 @@ public class GameMain extends Game {
 				break;
 			case  Highscore:
 				if (highscoreScreen == null) highscoreScreen = new HighscoreScreen(this);
-				break;
-			case GameOverScreen:
-				if (gameOverScreen == null) gameOverScreen = new GameOverScreen(this);
-				break;
-
 		}
 	}
-
-	public void changeScreen(Screens screens){
-		switch (screens){
-			case GameOverScreen:
-				if (gameOverScreen == null) setScreen(new GameOverScreen(this));
-				break;
-		}
-	}
-
 }

@@ -2,8 +2,12 @@ package com.szunwu.jumpnrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.szunwu.jumpnrun.GameMain;
 
@@ -40,7 +44,38 @@ public class RegisterScreen implements Screen{
         Label Name = new Label("Name", skin);
         Label Passwort = new Label("Passwort", skin);
         TextButton Register = new TextButton("Registrieren", skin);
-        TextField EingabeName = new TextField("", skin);
+        TextField enterName = new TextField("", skin);
+        TextField enterPwort = new TextField("", skin);
+        TextButton Login = new TextButton("Login", skin);
+
+        table.add(Name).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(enterName).fillX().uniformX();
+        table.row();
+        table.add(Passwort).fillX().uniformX();
+        table.row();
+        table.add(enterPwort).fillX().uniformX();
+        table.row();
+        table.add(Register).fillX().uniformX();
+        table.row();
+        table.add(Login);
+
+        stage.draw();
+
+        Login.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(GameMain.Login);
+            }
+        });
+
+        Register.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(GameMain.Character);
+            }
+        });
+
 
 
 
@@ -52,11 +87,18 @@ public class RegisterScreen implements Screen{
 
     @Override
     public void render(float delta) {
+        //clear screen
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //tell stage to do actions and draw itself
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
     }
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
 
     }
 
@@ -77,6 +119,7 @@ public class RegisterScreen implements Screen{
 
     @Override
     public void dispose() {
+        stage.dispose();
 
     }
 }
